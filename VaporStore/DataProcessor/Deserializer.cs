@@ -59,7 +59,7 @@ namespace VaporStore.DataProcessor
                  games.Add(game);
 		        sb.AppendLine($"Added {game.Name} ({game.Genre.Name}) with {game.GameTags.Count} tags");
 		    }
-            
+
             context.Games.AddRange(games);
 		    context.SaveChanges();
 
