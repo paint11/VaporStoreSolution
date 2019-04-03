@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
@@ -22,24 +22,24 @@ namespace VaporStore.DataProcessor
 		    var gamesDto = JsonConvert.DeserializeObject<ImportGameDto[]>(jsonString);
 
 		    var sb = new StringBuilder();
-            	    var games = new List<Game>();
+            var games = new List<Game>();
 
 		    foreach (var gameDto in gamesDto)
 		    {
 		        if (!IsValid(gameDto) || gameDto.Tags.Count == 0)
 		        {
 		            sb.AppendLine("Invalid Data");
-			    continue;
+                    continue;
 		        }
 
 		        var game = new Game
 		        {
-			    Name = gameDto.Name,
-			    Price = gameDto.Price,
-			    ReleaseDate = DateTime.ParseExact(gameDto.ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture)
+                    Name = gameDto.Name,
+                    Price = gameDto.Price,
+                    ReleaseDate = DateTime.ParseExact(gameDto.ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture)
 		        };
 
-			var developer = GetDeveloper(context, gameDto.Developer);
+                var developer = GetDeveloper(context, gameDto.Developer);
 		        var genre = GetGenre(context, gameDto.Genre);
 
 		        game.Developer = developer;
@@ -49,31 +49,31 @@ namespace VaporStore.DataProcessor
 		        {
 		            var tag = GetTag(context, currentTag);
 
-			    game.GameTags.Add(new GameTag
-			    {
-				Game = game,
-				Tag = tag
-			    });
+                    game.GameTags.Add(new GameTag
+                    {
+                        Game = game,
+                        Tag = tag
+                    });
 		        }
 
-			games.Add(game);
+                 games.Add(game);
 		        sb.AppendLine($"Added {game.Name} ({game.Genre.Name}) with {game.GameTags.Count} tags");
 		    }
 
-		    context.Games.AddRange(games);
+            context.Games.AddRange(games);
 		    context.SaveChanges();
 
 		    string result = sb.ToString().TrimEnd();
 
-		    return result;
+            return result;
 		}
 
 	    public static string ImportUsers(VaporStoreDbContext context, string jsonString)
 	    {
 	        var usersDto = JsonConvert.DeserializeObject<ImportUserDto[]>(jsonString);
 
-		var sb = new StringBuilder();
-		var users = new List<User>();
+            var sb = new StringBuilder();
+            var users = new List<User>();
 
 	        foreach (var userDto in usersDto)
 	        {
@@ -81,7 +81,7 @@ namespace VaporStore.DataProcessor
 	            {
 	                sb.AppendLine("Invalid Data");
 	                continue;
-		    }
+                }
 
 	            bool isValidEnum = true;
 
