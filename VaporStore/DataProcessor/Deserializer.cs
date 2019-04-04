@@ -240,7 +240,7 @@ namespace VaporStore.DataProcessor
 
 	        return developer;
 	    }
-
+      //IsValid Method
         private static bool IsValid(object entity)
 	    {
 	        var validationContext = new ValidationContext(entity);
